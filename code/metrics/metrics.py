@@ -1,9 +1,9 @@
 """
-评估指标 + 训练损失（torch 实现，可微）。对齐 Qiao 2021 的评估口径。
+评估指标 + 训练损失（torch 实现，可微）。
 
 含：NRMSE / PSNR / SSIM / MS-SSIM / 线性重标定(Eq.14-15) / evaluate()。
 说明：相位-only 衍射网络无损但会重分布能量，输出与 GT 存在全局尺度差，
-     故评估前做 MSE-最优线性重标定 alpha*pred+beta（Qiao 的做法），保证公平。
+     故评估前做 MSE-最优线性重标定 alpha*pred+beta，保证公平。
 （去相关分析分辨率较复杂，留待后续补充；当前用 NRMSE/PSNR/SSIM/MS-SSIM。）
 """
 
@@ -21,7 +21,7 @@ def _b1hw(x):
 
 
 def linear_rescale(pred, target):
-    """逐图 MSE-最优 alpha*pred+beta 贴合 target（Qiao 2021 Eq.14-15）。pred/target: [B,1,H,W]。"""
+    """逐图 MSE-最优 alpha*pred+beta 贴合 target。pred/target: [B,1,H,W]。"""
     B = pred.shape[0]
     out = torch.empty_like(pred)
     for i in range(B):
