@@ -1,5 +1,5 @@
 """
-DFCAN —— 电子 SOTA 上界基线（Qiao et al. 2021, Nat Methods, DL-SR）的 PyTorch 忠实复现。
+DFCAN 的复现。
 
 仅作"光学 vs 电子"对标用，绝不接入光学网络。结构：
   Conv(head) -> [ResidualGroup × n_group] -> Conv(up) -> Conv(tail) -> sigmoid
@@ -17,7 +17,7 @@ import torch.nn.functional as F
 
 
 class FourierChannelAttention(nn.Module):
-    """逐通道注意力, 权重来自特征 FFT 幅度谱(Qiao 2021 核心模块)。"""
+    """逐通道注意力, 权重来自特征 FFT 幅度谱。"""
 
     def __init__(self, channel, reduction=16):
         super().__init__()
