@@ -49,8 +49,6 @@ This repository is **code only**:
 - The **BioSR** dataset (Qiao et al., *Nature Methods* 2021) is **not** redistributed
   here — download it from the authors' figshare and point
   `BIOSR_ROOT` in `code/datasets/biosr.py` at your copy.
-- Trained weights (`*.pt`), generated figures (`*.png`) and run logs are excluded
-  via `.gitignore`.
 
 > File paths inside the scripts are absolute (they were run on a SLURM cluster);
 > adjust them for your machine.
