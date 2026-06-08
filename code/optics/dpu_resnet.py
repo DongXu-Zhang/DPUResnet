@@ -1,5 +1,5 @@
 """
-DPU-ResNet —— 文档要求的"基于 DPU 的 ResNet"（核心交付物）。
+DPU-ResNet。
 
 残差全光实现（Res-D2NN, Dou 2020）：每个残差块内，残差支路 F(U) 与捷径 U 在
 **探测之前做相干复场相加**（固定 50/50 分束器，无可训练权重），再过 |U|² 探测(非线性)、
@@ -44,7 +44,7 @@ class ResidualDPUBlock(nn.Module):
         S = U                                        # 捷径分支(Res-D2NN跳连)
         for l in range(self.phi.shape[0]):
             phase = self.phi[l].to(_real_dtype(U))
-            F = F * torch.exp(1j * phase)            # 相位调制(论文2)
+            F = F * torch.exp(1j * phase)            # 相位调制
             F = asm(F, self.z, self.dx, self.wavelength)  # 残差支路:相位+衍射
             if self.shortcut == "prop":
                 S = asm(S, self.z, self.dx, self.wavelength)  # 捷径同距自由传播(模糊→丢锚点)
@@ -59,7 +59,7 @@ class ResidualDPUBlock(nn.Module):
             return merged                            #   整网=单个线性算子,仅末端一次|U|²读出
         e_m = intensity(merged).sum(dim=(-1, -2), keepdim=True)
         merged = merged * torch.sqrt(e_in / (e_m + EPS))  # 固定能量归一化(参数自由全局标量)
-        I = intensity(merged)                        # 平方律探测(论文3 非线性)
+        I = intensity(merged)                        # 平方律探测
         return torch.sqrt(I + EPS).to(U.dtype)       # 重编码为下一层振幅
 
 
