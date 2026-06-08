@@ -1,0 +1,14 @@
+# Core (PyTorch — install the build matching your CUDA / CPU from pytorch.org)
+torch
+torchvision
+
+# Numerics / plotting
+numpy
+matplotlib
+
+# Microscopy I/O
+tifffile      # read/write TIFF patches
+mrcfile       # read raw BioSR .mrc volumes
+
+# Testing (optional)
+pytest

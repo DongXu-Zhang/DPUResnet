@@ -1,0 +1,33 @@
+# ===== datasets (incl. supervisor's BioSR — do NOT redistribute) =====
+data/
+
+# ===== trained weights / generated figures / run artifacts =====
+results/
+logs/
+code/logs/
+*.pt
+*.png
+*.out
+*.err
+*.log
+
+# ===== reference papers + private assignment (copyright / private) =====
+material/
+
+# ===== internal analysis docs (kept local, not published) =====
+DESIGN_optical_SR.md
+GENERALIZATION_and_CCPs.md
+REPORT_for_supervisor.md
+
+# ===== python caches / env =====
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+.venv/
+venv/
+*.egg-info/
+
+# ===== OS / editor =====
+.DS_Store
+.idea/
+.vscode/
