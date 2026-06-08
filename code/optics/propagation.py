@@ -1,7 +1,7 @@
 """
-角谱法（Angular Spectrum Method）自由空间衍射传播 —— 项目地基。
+角谱法（Angular Spectrum Method）自由空间衍射传播。
 
-实现要点（对应老师文档提醒 a）：
+实现要点：
   - 传递函数 H(fx,fy) = exp(i*2*pi*z*sqrt(1/lambda^2 - fx^2 - fy^2))
   - 倏逝波（sqrt 内为负）置零，避免 NaN 且不让 z<0 时指数爆炸
   - band-limited ASM（Matsushima & Shimobaba 2009）抑制长距离混叠
