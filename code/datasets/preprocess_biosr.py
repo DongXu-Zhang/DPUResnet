@@ -2,7 +2,6 @@
 把原始 BioSR 单结构 (.mrc) 预处理成 DeepTrackAI 同款 128×128 float32 [0,1] WF→GT 数据，
 使现有 datasets/biosr.py 仅换 root 即可复用，用于验证光学 DPU 方法在其他结构上的泛化性。
 
-物理约定（对齐 Qiao 官方 DL-SR/DataAugumentation 与本项目 MT 子集）：
   - WF(宽场低分辨输入) = 9 帧结构光照明原始 SIM 之和（结构光相加→均匀照明=宽场），再百分位归一化。
   - GT = SIM 重建 (2× 网格) 用 2×2 块均值降采样到 WF 同网格（本项目任务=同网格去卷积+去噪，
         光学网络输出也是同 128 网格 |U|²，故 GT 必须同网格）。
