@@ -1,11 +1,11 @@
 """
-DPU 模块 —— 结合论文2(Lin/D2NN)与论文3(Zhou/DPU)。
+DPU 模块。
 
 唯一可训练参数 = 相位掩膜 phi（薄元近似，逐像素）。其余全是固定物理：
   编码(图像->复场振幅)、角谱衍射、|U|²平方律探测(非线性)、sqrt重编码(光电环)。
 
-DPUBlock : n_phase 层 [相位 exp(iφ) -> 角谱衍射]，返回复场(不探测)   <- 论文2 相干衍射线性核
-DPUStack : 编码 -> 逐 block；block 间 |U|²探测+sqrt重编码 -> 末端读 |U|²  <- 论文3 光电环非线性
+DPUBlock : n_phase 层 [相位 exp(iφ) -> 角谱衍射]，返回复场(不探测) 
+DPUStack : 编码 -> 逐 block；block 间 |U|²探测+sqrt重编码 -> 末端读 |U|² 
            nonlinear=False 时关掉 block 间探测 -> 整栈塌缩成单一线性算子(消融对照)
 
 设计旋钮(可扫)：n_blocks(深度)、n_phase(每block相位层数)、z(层间距)、encode(振幅/相位)。
@@ -40,7 +40,7 @@ class DPUBlock(nn.Module):
     def forward(self, U):
         for l in range(self.phi.shape[0]):
             phase = self.phi[l].to(_real_dtype(U))      # 跟随场精度
-            U = U * torch.exp(1j * phase)               # 薄元相位调制(论文2)
+            U = U * torch.exp(1j * phase)               # 薄元相位调制
             U = asm(U, self.z, self.dx, self.wavelength)  # 角谱衍射
         return U
 
@@ -75,7 +75,7 @@ class DPUStack(nn.Module):
         for i, block in enumerate(self.blocks):
             U = block(U)
             if detect_between and i < n - 1:      # 末块后不探测(留给 forward 读出)
-                I = intensity(U)                  # 平方律探测(论文3 非线性)
+                I = intensity(U)                  # 平方律探测(非线性)
                 U = torch.sqrt(I + EPS).to(U.dtype)  # 重编码为下一层振幅(丢相位,光电环)
         return U
 
