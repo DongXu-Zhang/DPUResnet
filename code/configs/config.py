@@ -1,17 +1,15 @@
 """
-全光 DPU 超分辨项目 —— 全局物理常数（单一可信来源）
-
-所有数值锁在这里，代码里不许散落魔法数字。对应老师文档的提醒：
+全光 DPU 超分辨项目 全局物理常数：
  (b) 波长可用 532 nm；SLM 单元尺寸 >= 2 倍波长
  (d) 受显存限制，处理图像尺寸取小一点，如 128x128
 """
 
 # --- 光学物理常数 ---
-WAVELENGTH = 532e-9          # m, 绿光（提醒 b）
-PIXEL_PITCH = 2 * WAVELENGTH  # m, SLM 单元尺寸下限 = 2*lambda = 1.064 um（提醒 b）
+WAVELENGTH = 532e-9          # m, 绿光
+PIXEL_PITCH = 2 * WAVELENGTH  # m, SLM 单元尺寸下限 = 2*lambda = 1.064 um
 
 # --- 仿真网格 ---
-PATCH = 128                  # 处理 patch 边长（提醒 d）
+PATCH = 128                  # 处理 patch 边长
 PAD_FACTOR = 2               # FFT 前 zero-pad 倍数，抑制循环卷积绕回
 
 # --- 数值 ---
